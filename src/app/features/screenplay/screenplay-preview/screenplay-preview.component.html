@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col">
+        <div class="btn-group">
+            <button 
+                type="button"
+                class="btn btn-secondary" 
+                name='orderBy'
+                btnRadio='movie'
+                (click)="switchCategory('movie')"
+                [(ngModel)]="screenplayParams.category">Movies</button>
+    
+            <button 
+                type="button"
+                class="btn btn-secondary" 
+                name='orderBy' 
+                btnRadio='show'
+                (click)="switchCategory('show')"
+                [(ngModel)]="screenplayParams.category">Tv Shows</button>
+        </div>
+    </div>
+
+    <div class="col">
+        <app-searchbar (newSearchEvent)="onSearch($event)"></app-searchbar>
+    </div>
+</div>
+
+<div class="mt-4">
+    <div class="row">
+        <ng-container *ngFor="let screenplay of screenplays">
+            <div class="col col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3" [routerLink]="['/screenplay', screenplay.id]" style="cursor:pointer;">
+                <div class="card h-100">
+                    <img class="card-img-top" *ngIf="this.screenplay?.photoUrl" [src]="this.screenplay?.photoUrl" [alt]="this.screenplay?.title">
+                    <img class="card-img-top" *ngIf="!this.screenplay?.photoUrl" src="../../../assets/images/Image404.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{screenplay.title}}</h5>
+                        <p class="card-subtitle mb-2">({{screenplay?.averageRate | number : '1.2-2'}} stars)</p>
+                        <p class="card-text"> {{screenplay.description | slice:0:40}}...</p>
+                        <span class="badge alert-warning p-2">{{screenplay.category}}</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <div *ngIf="screenplays?.length == 0" class="w-100 text-center mt-5">
+            <h4 class="font-weight-normal" >No screenplays found</h4>
+        </div>
+
+        <div class="col-12 text-center" *ngIf="pagedList?.totalPages > pagedList?.currentPage && screenplays.length > 0">
+            <button class="btn alert-primary" (click)="loadMore()">Load More</button>
+        </div>
+    </div>
+</div>
