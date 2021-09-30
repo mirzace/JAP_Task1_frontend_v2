@@ -19,7 +19,6 @@ export class ScreenplayDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe( (paramMap: ParamMap) => {
-      console.log(paramMap);
       if (paramMap.has("id")) {
         const id = paramMap.get("id");
         this.screenplayService.getScreenplay(parseInt(id)).subscribe( res => {

@@ -51,7 +51,6 @@ export class ScreenplayRateComponent implements OnInit {
 
   logClick(event: any) {
     this.isReadonly = true;
-    console.log("kliknuto")
   }
 
 }
